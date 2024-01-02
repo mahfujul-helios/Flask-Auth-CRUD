@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+<title>{% block title %} Home Page {% endblock title %}</title>
+
+
+
+{% block content %}
+<div class="container">
+    <h1 class="text-center mb-5 text-success shadow p-3 mb-5 bg-body rounded">Your Notes</h1>
+
+    <ul class="list-group list-group-flush" id="notes">
+        
+   
+   {% if current_user.notes %}
+    
+   
+    
+        <table class="table table-success  shadow p-3 mb-5 bg-body rounded">
+            <thead>
+              <tr>
+                <th scope="col">S-No</th>
+                <th scope="col">Note</th>
+                <th scope="col">Date</th>
+                <th scope="col">Action</th>
+                
+              </tr>
+            </thead>
+            <tbody>
+    {% for note in current_user.notes %}
+          <tr>
+            <th scope="row">{{note.id}}</th>
+            <td>{{note.data}}</td>
+            <td>{{note.date}}</td>
+            <td>
+                <a href="{{ url_for('views.delete_note', id=note.id) }}" type="button" class="btn btn-danger">Delete</a>
+                <a href="{{ url_for('views.update', id=note.id) }}" type="button" class="btn btn-info">Edit</a>
+            </td>
+            
+           
+          </tr>
+         
+          
+          {% endfor %}
+        </tbody>
+      </table>
+      {% else %}
+      <p class="text-center alert alert-warning">No Notes, Please Add Notes</p>
+      {% endif %}
+</div>
+  
+            
+    </ul>
+  <div class="container">
+    <form method="POST">
+
+        <textarea class="form-control  shadow p-3 mb-5 bg-body rounded" placeholder="Write your note"  id="note" name="note"></textarea>
+       
+  
+         <div class="d-flex align-items-center">
+
+            <button type="submit" class="btn btn-primary mt-5 mx-auto">Add Note</button>
+         </div>
+   
+     
+   </form>
+  </div>
+</div>
+    
+{% endblock content %}
+
+    
